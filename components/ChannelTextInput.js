@@ -44,7 +44,7 @@ const ChannelTextInput = ({ channelId }) => {
   }
 
   return (
-    <div className="flex flex-row fixed bottom-0 inset-x-0 py-5 p-3 inputColor">
+    <div className="flex flex-row fixed bottom-0 inset-x-0 py-5 p-3 bg-neutral-950 bg-opacity-50 backdrop-blur-lg">
       <form className="w-full flex items-center" onSubmit={handleSubmit}>
         <input
           type="text"
