@@ -11,7 +11,8 @@ export default async function handler(req, res) {
         const channelId = channelObj._id;
         const isPublic = channelObj.isPublic;
         const users = channelObj.users;
-        res.status(201).json({ found: true, id: channelId, isPublic: isPublic, users });
+        const desc = channelObj.description;
+        res.status(201).json({ found: true, id: channelId, isPublic: isPublic, users, description: desc });
       } else {
         res.status(201).json({ found: false });
       }

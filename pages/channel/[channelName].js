@@ -19,7 +19,7 @@ function Channel() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUser, setIsUser] = useState(false);
   const [isPublic, setIsPublic] = useState(true);
-  const [channelDetails, setChannelDetails] = useState(null);
+  const [channelDescription, setChannelDescription] = useState(null);
   const [error, setError] = useState("");
   const { user } = useContext(UserContext);
 
@@ -59,6 +59,7 @@ function Channel() {
           // public or not, get id and set found to true
           setChannelId(data.id);
           setChannelFound(true);
+          setChannelDescription(data.description);
           const resMessages = await fetch(`/api/messages/${data.id}`);
           const messagesData = await resMessages.json();
 
@@ -86,7 +87,7 @@ function Channel() {
     <div>
       {isLoading ? (
         <div className='flex flex-col h-screen'>
-          <Navbar currentChannel={channelName} />
+          <Navbar currentChannel={channelName} channelId={channelId} />
           <div className='flex items-center justify-center m-20'>
             <LoadingSpinner />
           </div>
@@ -95,9 +96,9 @@ function Channel() {
         <div>
           {isPublic && channelFound ? (
             <div className='flex flex-col h-screen'>
-              <Navbar currentChannel={channelName} />
+              <Navbar currentChannel={channelName} channelId={channelId} />
               <div className='flex-1 overflow-auto'>
-                <ChannelChat channelId={channelId} existingMessages={messages} />
+                <ChannelChat channelId={channelId} channelDescription={channelDescription} existingMessages={messages} />
                 <ChannelTextInput channelId={channelId} />
               </div>
             </div>
@@ -107,7 +108,7 @@ function Channel() {
                 <div>
                   {isUser != false && checkIfMember(user.username) ? (
                     <div className='flex flex-col h-screen'>
-                      <Navbar currentChannel={channelName} />
+                      <Navbar currentChannel={channelName} channelId={channelId} />
                       <div className='flex-1 overflow-auto'>
                         <ChannelChat channelId={channelId} existingMessages={messages} />
                         <ChannelTextInput channelId={channelId} />

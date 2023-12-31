@@ -7,6 +7,11 @@ const channelSchema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
+  description: {
+    type: String,
+    required: true,
+    maxLength: 150,
+  },
   isPublic: {
     type: Boolean,
     default: true,

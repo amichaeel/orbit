@@ -34,6 +34,8 @@ function Create() {
       username: user.username
     };
 
+    console.log(channelData)
+
     try {
       const response = await fetch('/api/channels/create', {
         method: 'POST',

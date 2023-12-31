@@ -1,20 +1,28 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import Router from 'next/router';
 import Modal from 'react-modal';
 import LoginModal from './LoginModal';
 import Image from 'next/image';
+import LoadingSpinner from './LoadingSpinner';
+import withAuth from './withAuth';
 import { UserContext } from '../context/userContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignInAlt, faSignOutAlt, faSearch, faSquarePlus, faBell, faBellSlash } from '@fortawesome/free-solid-svg-icons';
+import { faSignInAlt, faSignOutAlt, faSearch, faSquarePlus, faBell, faBellSlash, faCircle, faGlobe, faCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 
 
 Modal.setAppElement('#__next'); // Set a root element for accessibility reasons
 
-const Navbar = ({ currentChannel }) => {
+const Navbar = ({ currentChannel, channelId }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  const [joinChannelLoading, setJoinChannelLoading] = useState(false);
+  const [joined, setJoined] = useState(false);
+  // const [userIsChannelMember, setUserIsChannelMember] = useState(false);
+  const [error, setError] = useState('');
   const Router = useRouter();
 
+  
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -34,14 +42,73 @@ const Navbar = ({ currentChannel }) => {
     Router.reload()
   }
 
+  const handleJoinChannel = async (event) => {
+    event.preventDefault();
+    setJoinChannelLoading(true)
+
+    const obj = {
+      username: user.username,
+      userId: user._id,
+      channelName: currentChannel,
+      channelId: channelId,
+    }
+
+    try {
+      const response = await fetch('/api/channels/joinPublic', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(obj),
+      })
+
+      const data = await response.json();
+
+      if (response.ok && data.joined) {
+        console.log('channel joined successfully')
+        setJoined(true);
+      }
+    } catch (error) {
+      console.error('Failed to send request', error);
+      setError('Failed to send request: ' + error.message);
+    } finally {
+      setJoinChannelLoading(false);
+    }
+  };
+
   return (
     <nav className="flex justify-between items-center bg-zinc-950 text-white p-4">
       <div className="flex items-center">
         {/* <Image className='cursor-pointer' onClick={() => window.location.href = '/'} src='/images/logo.png' width={64} height={64} alt="quasar-logo" /> */}
         <span onClick={() => window.location.href = '/'} className='font-thin text-2xl cursor-pointer mr-3'>orbit</span>
-        <span className='text-lg mr-3'>{currentChannel ? ( `#${currentChannel}`) : ('')}</span>
-        <span onClick={() => window.location.href = '/browse'} className='mr-3 text-neutral-400 cursor-pointer hover:text-opacity-90'><FontAwesomeIcon icon={faSearch}/></span>
-        <span onClick={() => window.location.href = '/create'} className='text-neutral-400 cursor-pointer hover:text-opacity-90'><FontAwesomeIcon icon={faSquarePlus}/></span>
+        {currentChannel ? (
+          <div className="mr-3">
+            <span className='text-lg mr-3'>#{currentChannel}</span>
+            <span onClick={handleJoinChannel} className='cursor-pointer text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-light rounded-md text-sm px-2 py-1 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800'>
+              <div className="inline-block">
+                {(user && user.channels.includes(currentChannel)|| joined) ? (
+                  <div classNam='inline-block'>
+                    <FontAwesomeIcon icon={faCheck} />
+                  </div>
+                ) : (
+                  <div>
+                    {!joinChannelLoading ? (
+                      <FontAwesomeIcon icon={faPlus} />
+                    ) : (
+                        <LoadingSpinner />
+                    )}
+                  </div>
+                )}
+              </div>
+            </span>
+            <FontAwesomeIcon className='text-green-400 text-xs mr-2' icon={faGlobe} />
+            <span className='text-sm font-light mr-3'>1</span>
+          </div>
+        ) : (
+          <div></div>
+        )}
+        <span onClick={() => window.location.href = '/browse'} className='mr-3 text-neutral-400 cursor-pointer hover:text-opacity-90'><FontAwesomeIcon icon={faSearch} /></span>
+        <span onClick={() => window.location.href = '/create'} className='text-neutral-400 cursor-pointer hover:text-opacity-90'><FontAwesomeIcon icon={faSquarePlus} /></span>
       </div>
 
       <div>
@@ -65,4 +132,4 @@ const Navbar = ({ currentChannel }) => {
 };
 
 
-export default Navbar;
+export default withAuth(Navbar);

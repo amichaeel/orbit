@@ -1,42 +1,67 @@
-import React, { useEffect, useState } from 'react';
-// import Message from '@/models/Message';
+import React, { useState, useEffect } from 'react';
+import { ChevronDownIcon } from '@heroicons/react/outline';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbtack, faCircleChevronDown, faUsers, faCircleDot, faGlobe } from '@fortawesome/free-solid-svg-icons';
 
-// import { io } from 'socket.io-client';
-
-// const socket = io(process.env.NEXT_PUBLIC_API_URL);
-
-const ChannelChat = ({ channelId, existingMessages }) => {
+const ChannelChat = ({ channelId, existingMessages, channelDescription }) => {
   const [messages, setMessages] = useState(existingMessages);
-
-  // implement listener for new messages in the database. should listen for messages with the same channelId
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     setMessages(existingMessages)
   }, [existingMessages]);
 
-  // useEffect(() => {
-  //   socket.emit('joinChannel', channelId);
-
-  //   socket.on('newMessage', (newMessage) => {
-  //     setMessages((prevMessages) => [...prevMessages, newMessage])
-  //   })
-
-  //   return () => {
-  //     socket.off('newMessage');
-  //     socket.emit('leaveChannel', channelId);
-  //   }
-  // })
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
   return (
     <div>
+      {/* Dropdown Trigger */}
+      <div className="flex justify-center items-center py-2 cursor-pointer hover:bg-neutral-800 transition-all" onClick={toggleDropdown}>
+        <FontAwesomeIcon className={`h-5 w-5 rounded-sm text-neutral-500 transition-transform ${dropdownOpen ? 'rotate-180' : 'rotate-0'}`} icon={faCircleChevronDown} />
+        {/* <ChevronDownIcon className={`h-5 w-5 bg-neutral-600 rounded-sm text-neutral-300 transition-transform ${dropdownOpen ? 'rotate-180' : 'rotate-0'}`} /> */}
+      </div>
+
+      {/* Dropdown Content */}
+      <div
+        className={`flex flex-row justify-center items-center w-full bg-neutral-900 text-neutral-300 border-b border-neutral-800 transition-all duration-500 ease-in-out overflow-hidden ${dropdownOpen ? 'max-h-96' : 'max-h-0'}`}
+      >
+        {/* Content only visible when dropdown is open */}
+        {dropdownOpen && (
+          <>
+            <div className="mb-2 p-4 bg-neutral-700 m-2 rounded-lg hover:bg-neutral-500">
+              <h2 className="text-xl font-light"><FontAwesomeIcon className='mr-2' icon={faThumbtack} />pinned message</h2>
+              <p>pinned message goes here</p>
+            </div>
+            <div className="mb-2 p-4 bg-neutral-700 m-2 rounded-lg hover:bg-neutral-500">
+              <h2 className="text-xl font-light">channel description</h2>
+              <p>{channelDescription}</p>
+            </div>
+            <div className="mb-2 p-4 bg-neutral-700 m-2 rounded-lg hover:bg-neutral-500 flex flex-col items-center">
+              <h2 className="text-xl font-light"><FontAwesomeIcon className='mr-2' icon={faUsers} />channel members</h2>
+              <p className='text-l font-light'>{1}</p>
+            </div>
+            <div className="mb-2 p-4 bg-neutral-700 m-2 rounded-lg hover:bg-neutral-500 flex flex-col items-center">
+              <div className='flex flex-row items-center'>
+                <FontAwesomeIcon className='text-green-400 mr-2' icon={faGlobe} />
+                <h2 className="text-xl font-light">online</h2>
+              </div>
+              {/* Display online members */}
+              <p className='text-l font-light'>{1}</p>
+            </div>
+            {/* Future sections like pinned messages and active users */}
+          </>
+        )}
+      </div>
+
+      {/* Messages */}
       {messages.length > 0 ? (
-        <div className="flex-1 overflow-hidden p-2 bg-neutral-900 w-full mb-24"> {/* Ensure full width */}
-          <div className='flex flex-col scroll-m-9 '>
+        <div className="flex-1 overflow-hidden p-2 bg-neutral-900 w-full mb-24">
+          <div className='flex flex-col scroll-m-9'>
             {messages.toReversed().map((message) => (
               <div key={message._id} className="py-2 hover:bg-neutral-800 transition-all rounded-lg text-neutral-300">
-                {/* Formatting the date from createdAt */}
                 <span className='mr-2 text-sm text-neutral-400'>{new Date(message.createdAt).toLocaleTimeString()}</span>
-                {/* Placeholder for username until user details are implemented */}
                 <span className='mr-2 text-neutral-400 text-sm'>{message.username}:  </span>
                 <span className='text-neutral-200 text-sm'>{message.content}</span>
               </div>
