@@ -22,7 +22,7 @@ const Navbar = ({ currentChannel, channelId }) => {
   const [error, setError] = useState('');
   const Router = useRouter();
 
-  
+
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -45,6 +45,12 @@ const Navbar = ({ currentChannel, channelId }) => {
   const handleJoinChannel = async (event) => {
     event.preventDefault();
     setJoinChannelLoading(true)
+
+    if (!user) {
+      setModalIsOpen(true);
+      setJoinChannelLoading(false);
+      return;
+    }
 
     const obj = {
       username: user.username,
