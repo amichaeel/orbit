@@ -4,7 +4,7 @@ import withAuth from '@/components/withAuth';
 
 function Home() {
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen  text-white">
       <Navbar />
       <div className='container mx-auto p-4 text-center'>
         <div className='flex flex-col justify-center items-center'>

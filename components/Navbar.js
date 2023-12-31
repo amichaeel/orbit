@@ -18,10 +18,8 @@ const Navbar = ({ currentChannel, channelId }) => {
   const { user, setUser } = useContext(UserContext);
   const [joinChannelLoading, setJoinChannelLoading] = useState(false);
   const [joined, setJoined] = useState(false);
-  // const [userIsChannelMember, setUserIsChannelMember] = useState(false);
   const [error, setError] = useState('');
   const Router = useRouter();
-
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -34,6 +32,7 @@ const Navbar = ({ currentChannel, channelId }) => {
   const handleLogin = (username) => {
     setUser({ username: username });
     closeModal();
+    Router.reload();
   };
 
   const handleLogout = () => {
@@ -47,7 +46,7 @@ const Navbar = ({ currentChannel, channelId }) => {
     setJoinChannelLoading(true)
 
     if (!user) {
-      setModalIsOpen(true);
+      openModal()
       setJoinChannelLoading(false);
       return;
     }
@@ -73,6 +72,7 @@ const Navbar = ({ currentChannel, channelId }) => {
       if (response.ok && data.joined) {
         console.log('channel joined successfully')
         setJoined(true);
+        Router.reload();
       }
     } catch (error) {
       console.error('Failed to send request', error);
@@ -83,7 +83,7 @@ const Navbar = ({ currentChannel, channelId }) => {
   };
 
   return (
-    <nav className="flex justify-between items-center bg-zinc-950 text-white p-4">
+    <nav className="flex justify-between items-center bg-neutral-950 text-white p-4">
       <div className="flex items-center">
         {/* <Image className='cursor-pointer' onClick={() => window.location.href = '/'} src='/images/logo.png' width={64} height={64} alt="quasar-logo" /> */}
         <span onClick={() => window.location.href = '/'} className='font-thin text-2xl cursor-pointer mr-3'>orbit</span>
@@ -92,7 +92,7 @@ const Navbar = ({ currentChannel, channelId }) => {
             <span className='text-lg mr-3'>#{currentChannel}</span>
             <span onClick={handleJoinChannel} className='cursor-pointer text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-light rounded-md text-sm px-2 py-1 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800'>
               <div className="inline-block">
-                {(user && user.channels.includes(currentChannel)|| joined) ? (
+                {((user && user.channels.includes(currentChannel)) || joined) ? (
                   <div classNam='inline-block'>
                     <FontAwesomeIcon icon={faCheck} />
                   </div>

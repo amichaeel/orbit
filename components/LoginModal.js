@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import Router from 'next/router';
 
 const LoginModal = ({ modalIsOpen, closeModal, setUser }) => {
   const [username, setUsername] = useState('');
@@ -28,6 +29,7 @@ const LoginModal = ({ modalIsOpen, closeModal, setUser }) => {
       localStorage.setItem('token', data.token);
       setUser({ username });
       closeModal();
+      Router.reload();
     } else {
       setError(data.message || 'An error occured.');
       console.error(data.message || "an error occured.");
