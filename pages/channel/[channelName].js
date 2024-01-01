@@ -12,6 +12,7 @@ function Channel() {
   const router = useRouter();
   const { channelName } = router.query;
   const [channelId, setChannelId] = useState(null);
+  const [channelCreationDate, setChannelCreationDate] = useState('');
   const [messages, setMessages] = useState([]);
   const [channelFound, setChannelFound] = useState(false);
   const [preventAccess, setPreventAccess] = useState(false);
@@ -60,6 +61,7 @@ function Channel() {
           setChannelId(data.id);
           setChannelFound(true);
           setChannelDescription(data.description);
+          setChannelCreationDate(data.createdOn);
           const resMessages = await fetch(`/api/messages/${data.id}`);
           const messagesData = await resMessages.json();
 
@@ -98,7 +100,7 @@ function Channel() {
             <div className='flex flex-col h-screen'>
               <Navbar currentChannel={channelName} channelId={channelId} />
               <div className='flex-1 overflow-auto'>
-                <ChannelChat channelId={channelId} channelDescription={channelDescription} existingMessages={messages} />
+                <ChannelChat channelId={channelId} channelDescription={channelDescription} channelCreationDate={channelCreationDate}existingMessages={messages} />
                 <ChannelTextInput channelId={channelId} />
               </div>
             </div>

@@ -12,7 +12,8 @@ export default async function handler(req, res) {
         const isPublic = channelObj.isPublic;
         const users = channelObj.users;
         const desc = channelObj.description;
-        res.status(201).json({ found: true, id: channelId, isPublic: isPublic, users, description: desc });
+        const createdOn = channelObj.createdAt.toString().substring(4,15);
+        res.status(201).json({ found: true, id: channelId, isPublic: isPublic, users, description: desc, createdOn });
       } else {
         res.status(201).json({ found: false });
       }

@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbtack, faCircleChevronDown, faUsers, faCircleDot, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { faThumbtack, faCircleChevronDown, faUsers, faCircleDot, faGlobe, faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 
-const ChannelChat = ({ channelId, existingMessages, channelDescription }) => {
+const ChannelChat = ({ channelId, existingMessages, channelDescription, channelCreationDate }) => {
   const [messages, setMessages] = useState(existingMessages);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dateCreated, setDateCreated] = useState('');
 
   useEffect(() => {
     setMessages(existingMessages)
   }, [existingMessages]);
+
+  useEffect(() => {
+    const lastSpace = channelCreationDate.lastIndexOf(" ");
+    setDateCreated(channelCreationDate.substring(0, lastSpace) + ", " + channelCreationDate.substring(lastSpace+1))
+  }, [dateCreated]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -25,11 +31,15 @@ const ChannelChat = ({ channelId, existingMessages, channelDescription }) => {
 
       {/* Dropdown Content */}
       <div
-        className={`flex flex-row justify-center items-center w-full bg-neutral-900 text-neutral-300 border-b border-neutral-800 transition-all duration-500 ease-in-out overflow-hidden ${dropdownOpen ? 'max-h-96' : 'max-h-0'}`}
+        className={`flex flex-row justify-center items-center w-full bg-neutral-900 text-neutral-300 border-b border-neutral-800 transition-all duration-1000 ease-in-out overflow-hidden ${dropdownOpen ? 'max-h-96' : 'max-h-0'}`}
       >
         {/* Content only visible when dropdown is open */}
         {dropdownOpen && (
           <>
+            <div className="mb-2 p-4 bg-neutral-700 m-2 rounded-lg hover:bg-neutral-500">
+              <h2 className="text-xl font-light"><FontAwesomeIcon className='mr-2' icon={faCalendarDays} />created on</h2>
+              <p>{dateCreated}</p>
+            </div>
             <div className="mb-2 p-4 bg-neutral-700 m-2 rounded-lg hover:bg-neutral-500">
               <h2 className="text-xl font-light"><FontAwesomeIcon className='mr-2' icon={faThumbtack} />pinned message</h2>
               <p>pinned message goes here</p>
@@ -62,6 +72,7 @@ const ChannelChat = ({ channelId, existingMessages, channelDescription }) => {
             {messages.toReversed().map((message) => (
               <div key={message._id} className="py-2 hover:bg-neutral-800 transition-all rounded-lg text-neutral-300">
                 <span className='mr-2 text-sm text-neutral-400'>{new Date(message.createdAt).toLocaleTimeString()}</span>
+                <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Baller</span>
                 <span className='mr-2 text-neutral-400 text-sm'>{message.username}:  </span>
                 <span className='text-neutral-200 text-sm'>{message.content}</span>
               </div>
