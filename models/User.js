@@ -7,15 +7,45 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     trim: true,
+    maxLength: 15,
+    minLength: 3,
   },
   password: {
     type: String,
     required: true,
   },
+  about: {
+    type: String,
+    maxLength: 65
+  },
   channels: [{
     type: String,
     ref: 'Channel',
   }],
+  friends: [{
+    type: String,
+    ref: 'User',
+  }],
+  friendRequests: [{
+    type: String,
+    ref: 'User',
+  }],
+  outgoingFriendRequests: [{
+    type: String,
+    ref: 'User',
+  }],
+  followers: [{
+    type: String,
+    ref: 'User',
+  }],
+  following: [{
+    type: String,
+    ref: 'User',
+  }],
+  isPublic: {
+    type: Boolean,
+    default: true,
+  },
 }, { timestamps: true });
 
 // pre-save hook to hash password before saving the user document

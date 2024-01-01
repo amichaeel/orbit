@@ -100,7 +100,7 @@ function Channel() {
             <div className='flex flex-col h-screen'>
               <Navbar currentChannel={channelName} channelId={channelId} />
               <div className='flex-1 overflow-auto'>
-                <ChannelChat channelId={channelId} channelDescription={channelDescription} channelCreationDate={channelCreationDate}existingMessages={messages} />
+                <ChannelChat channelId={channelId} channelDescription={channelDescription} channelCreationDate={channelCreationDate} existingMessages={messages} />
                 <ChannelTextInput channelId={channelId} />
               </div>
             </div>

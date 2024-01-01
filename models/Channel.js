@@ -8,11 +8,13 @@ const channelSchema = new mongoose.Schema({
     trim: true,
     match: /^[a-z0-9-]+$/,  // Only allow alphanumeric characters and hyphens
     maxLength: 15,
+    minLength: 3,
   },
   description: {
     type: String,
     required: true,
     maxLength: 150,
+    minLength: 5
   },
   isPublic: {
     type: Boolean,
