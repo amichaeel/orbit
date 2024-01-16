@@ -12,10 +12,10 @@ const ChannelChat = ({ channelId, existingMessages, channelDescription, channelC
     setMessages(existingMessages)
   }, [existingMessages]);
 
-  useEffect(() => {
-    const lastSpace = channelCreationDate.lastIndexOf(" ");
-    setDateCreated(channelCreationDate.substring(0, lastSpace) + ", " + channelCreationDate.substring(lastSpace+1))
-  }, [dateCreated]);
+  // useEffect(() => {
+  //   const lastSpace = channelCreationDate.lastIndexOf(" ");
+  //   setDateCreated(channelCreationDate.substring(0, lastSpace) + ", " + channelCreationDate.substring(lastSpace+1))
+  // }, [dateCreated]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -36,10 +36,11 @@ const ChannelChat = ({ channelId, existingMessages, channelDescription, channelC
         {/* Content only visible when dropdown is open */}
         {dropdownOpen && (
           <>
-            <div className="mb-2 p-4 bg-neutral-700 m-2 rounded-lg hover:bg-neutral-500">
+          {/* TODO: FIX CHANNEL CREATION DATE */}
+            {/* <div className="mb-2 p-4 bg-neutral-700 m-2 rounded-lg hover:bg-neutral-500">
               <h2 className="text-xl font-light"><FontAwesomeIcon className='mr-2' icon={faCalendarDays} />created on</h2>
               <p>{dateCreated}</p>
-            </div>
+            </div> */}
             <div className="mb-2 p-4 bg-neutral-700 m-2 rounded-lg hover:bg-neutral-500">
               <h2 className="text-xl font-light"><FontAwesomeIcon className='mr-2' icon={faThumbtack} />pinned message</h2>
               <p>pinned message goes here</p>
