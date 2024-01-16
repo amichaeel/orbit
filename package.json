@@ -31,7 +31,8 @@
     "react-dom": "^18",
     "react-modal": "^3.16.1",
     "socket.io": "^4.7.2",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.2",
+    "vercel": "^33.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
