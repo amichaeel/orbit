@@ -90,7 +90,7 @@ function UserPage() {
     <div className="min-h-screen text-white">
       <Navbar />
       {isLoading ? (
-        <div>
+        <div className='mx-auto justify-center flex flex-col items-center'>
           <LoadingSpinner />
         </div>
 
@@ -124,11 +124,11 @@ function UserPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className='flex flex-col items-center justify-center'>
+                  <div className='flex flex-col align-middle items-center justify-center'>
                     <FontAwesomeIcon className='text-6xl mb-10' icon={faHeartCrack} />
                     <p className='font-medium text-md mb-2'>sorry, a user by that name could not be identified</p>
                     <p className='font-light text-xs mb-5'>the person may have been banned or the username is incorrect</p>
-                    <p className='cursor-pointer font-light text-xs text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800' onClick={() => window.location.href = "/"}>go home</p>
+                    <p className='cursor-pointer font-light text-xs  hover:text-white border  focus:ring-4 focus:outline-none rounded-lg px-5 py-2.5 text-center me-2 mb-2 border-gray-600 text-gray-400  hover:bg-gray-600 focus:ring-gray-800' onClick={() => window.location.href = "/"}>go home</p>
                   </div>
                 )
               }

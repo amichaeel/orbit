@@ -82,15 +82,15 @@ const LoginModal = ({ modalIsOpen, closeModal, setUser }) => {
       {/* <h2>{isLogin ? 'Login' : 'Sign Up'}</h2> */}
       <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
         <div className='mb-5'>
-          <label htmlFor="username" className='block mb-2 text-sm font-medium text-zinc-900 dark:text-white'>Username</label>
-          <input type="text" className='bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Username" onChange={(e) => setUsername(e.target.value)} required />
+          <label htmlFor="username" className='block mb-2 text-sm font-medium  text-white'>Username</label>
+          <input type="text" className='border text-zinc-900 text-sm rounded-lg  block w-full p-2.5 bg-zinc-700 border-zinc-600 placeholder-zinc-400text-white' placeholder="Username" onChange={(e) => setUsername(e.target.value)} required />
         </div>
         <div className='mb-5'>
-          <label htmlFor="password" className='block mb-2 text-sm font-medium text-zinc-900 dark:text-white'>Password</label>
-          <input type="password" className='bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder="Password" onChange={handlePasswordChange} required />
+          <label htmlFor="password" className='block mb-2 text-sm font-medium text-white'>Password</label>
+          <input type="password" className='border text-sm rounded-lg block w-full p-2.5 bg-zinc-700 border-zinc-600 placeholder-zinc-400 text-white' placeholder="Password" onChange={handlePasswordChange} required />
         </div>
-        <button className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-zinc-900 focus:outline-none bg-white rounded-lg border border-zinc-200 hover:bg-zinc-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-zinc-200 dark:focus:ring-zinc-700 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-600 dark:hover:text-white dark:hover:bg-zinc-700" type="submit">{isLoginView ? 'Login' : 'Sign Up'}</button>
-        <button className='text-zinc-900 hover:text-white border border-zinc-800 hover:bg-zinc-900 focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-zinc-600 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-600 dark:focus:ring-zinc-800' onClick={() => setIsLoginView(!isLoginView)}>
+        <button className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white/70 focus:outline-none rounded-lg border border-zinc-200/20 focus:z-10 focus:ring-4 focus:ring-zinc-700 bg-zinc-800 text-zinc-400border-zinc-600 hover:text-white hover:bg-zinc-700" type="submit">{isLoginView ? 'Login' : 'Sign Up'}</button>
+        <button className='border border-zinc-800  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-zinc-600 text-zinc-400 hover:text-white hover:bg-zinc-600 focus:ring-zinc-800' onClick={() => setIsLoginView(!isLoginView)}>
           {isLoginView ? 'Need to create an account?' : 'Already have an account?'}
         </button>
         {error && <div className="text-red-500 text-sm">{error}</div>} {/* Display error message */}

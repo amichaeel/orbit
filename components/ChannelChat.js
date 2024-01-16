@@ -72,7 +72,7 @@ const ChannelChat = ({ channelId, existingMessages, channelDescription, channelC
             {messages.toReversed().map((message) => (
               <div key={message._id} className="py-2 hover:bg-neutral-800 transition-all rounded-lg text-neutral-300">
                 <span className='mr-2 text-sm text-neutral-400'>{new Date(message.createdAt).toLocaleTimeString()}</span>
-                <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Baller</span>
+                <span class="text-xs font-medium me-2 px-2.5 py-0.5 rounded bg-gray-700 text-gray-300">Founder</span>
                 <span className='mr-2 text-neutral-400 text-sm'>{message.username}:  </span>
                 <span className='text-neutral-200 text-sm'>{message.content}</span>
               </div>

@@ -3,10 +3,12 @@ import Navbar from '@/components/Navbar';
 import withAuth from '@/components/withAuth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUnlock, faLock, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 function Browse() {
   const [channels, setChannels] = useState([])
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     async function loadChannels() {
@@ -30,34 +32,41 @@ function Browse() {
       }
     }
     loadChannels();
+    setIsLoading(false);
   }, []);
 
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto p-4">
-        <h1 className="text-4xl font-bold text-gray-400 mb-4">browse channels</h1>
-        {error && <p className="text-red-600">{error}</p>}
-        <ul>
-          {channels.map(channel => (
-            <li key={channel._id} onClick={() => window.location.href = `/channel/${channel.name}`} className="flex cursor-pointer justify-between items-center bg-gray-800 text-white p-3 rounded-lg mb-2 max-h-14 hover:bg-gray-700 transition-all">
-              <div>
-                <span className="font-medium">{channel.name}</span>
-                <span className={`text-xs me-2 ml-3 px-2.5 py-0.5 rounded-full ${channel.isPublic ? 'bg-green-100 text-green-800  dark:bg-green-900 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'}`}>
-                  {channel.isPublic ? 'public' : 'private' }
-                </span>
-              </div>
-              {channel.isPublic && (
-                <button
-                  onClick={() => window.location.href = `/channel/${channel.name}`}
-                  className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+      {isLoading ? (
+        <div className='justify-center items-center min-h-screen min-w-screen'>
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <div className="container mx-auto p-4">
+          <h1 className="text-4xl font-bold text-gray-400 mb-4">browse channels</h1>
+          {error && <p className="text-red-600">{error}</p>}
+          <ul>
+            {channels.map(channel => (
+              <li key={channel._id} onClick={() => window.location.href = `/channel/${channel.name}`} className="flex cursor-pointer justify-between items-center bg-gray-800 text-white p-3 rounded-lg mb-2 max-h-14 hover:bg-gray-700 transition-all">
+                <div>
+                  <span className="font-medium">{channel.name}</span>
+                  <span className={`text-xs me-2 ml-3 px-2.5 py-0.5 rounded-full ${channel.isPublic ? 'bg-green-900 text-green-300' : 'bg-red-900 text-red-300'}`}>
+                    {channel.isPublic ? 'public' : 'private'}
+                  </span>
+                </div>
+                {channel.isPublic && (
+                  <button
+                    onClick={() => window.location.href = `/channel/${channel.name}`}
+                    className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                     <FontAwesomeIcon icon={faUpRightFromSquare} />
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

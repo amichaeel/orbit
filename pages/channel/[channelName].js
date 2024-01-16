@@ -6,6 +6,8 @@ import ChannelTextInput from '@/components/ChannelTextInput';
 import withAuth from '@/components/withAuth';
 import { UserContext } from '@/context/userContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEarth, faEarthAmerica, faLock } from '@fortawesome/free-solid-svg-icons';
 
 
 function Channel() {
@@ -119,14 +121,28 @@ function Channel() {
                   ) : (
                     <div>
                       <Navbar />
-                      <div className='flex text-lg justify-center'>Channel is private. Access is restricted to members only.</div>
+                      <div className='max-w-2xl mx-auto bg-neutral-800 p-6 rounded-lg shadow-lg'>
+                        <div className='flex flex-col align-middle text-white/70 items-center justify-center'>
+                          <FontAwesomeIcon className='text-6xl mb-10' icon={faLock} />
+                          <p className='font-medium text-md mb-2'>sorry, this channel is private</p>
+                          <p className='font-light text-xs mb-5'>access is restricted to members only.</p>
+                          <p className='cursor-pointer font-light text-xs  hover:text-white border  focus:ring-4 focus:outline-none rounded-lg px-5 py-2.5 text-center me-2 mb-2 border-gray-600 text-gray-400  hover:bg-gray-600 focus:ring-gray-800' onClick={() => window.location.href = "/"}>go home</p>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
               ) : (
                 <div>
                   <Navbar />
-                  <div className='flex text-lg justify-center'>Channel not found :(</div>
+                  <div className='max-w-2xl mx-auto bg-neutral-800 p-6 rounded-lg shadow-lg'>
+                        <div className='flex flex-col align-middle text-white/70 items-center justify-center'>
+                          <FontAwesomeIcon className='text-6xl mb-10' icon={faEarthAmerica} />
+                          <p className='font-medium text-md mb-2'>we looked every! this channel could not be found</p>
+                          <p className='font-light text-xs mb-5'>please check your spelling, or create the channel yourself!</p>
+                          <p className='cursor-pointer font-light text-xs  hover:text-white border  focus:ring-4 focus:outline-none rounded-lg px-5 py-2.5 text-center me-2 mb-2 border-gray-600 text-gray-400  hover:bg-gray-600 focus:ring-gray-800' onClick={() => window.location.href = "/"}>go home</p>
+                        </div>
+                      </div>
                 </div>
               )}
             </div>

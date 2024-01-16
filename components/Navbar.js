@@ -177,12 +177,11 @@ const Navbar = ({ currentChannel, channelId }) => {
   return (
     <nav className="flex justify-between items-center bg-neutral-950 text-white p-4">
       <div className="flex items-center">
-        {/* <Image className='cursor-pointer' onClick={() => window.location.href = '/'} src='/images/logo.png' width={64} height={64} alt="quasar-logo" /> */}
         <span onClick={() => window.location.href = '/'} className='font-thin text-2xl cursor-pointer mr-3'>orbit</span>
         {currentChannel ? (
           <div className="mr-3">
             <span className='text-lg mr-3'>#{currentChannel}</span>
-            <span onClick={handleJoinChannel} className='cursor-pointer text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-light rounded-md text-sm px-2 py-1 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800'>
+            <span onClick={handleJoinChannel} className='cursor-pointer border focus:ring-4 focus:outline-none font-light rounded-md text-sm px-2 py-1 text-center me-2 mb-2 border-gray-600 text-gray-400 hover:text-white hover:bg-gray-600 focus:ring-gray-800'>
               <div className="inline-block">
                 {((user && user.channels.includes(currentChannel)) || joined) ? (
                   <div classNam='inline-block'>
